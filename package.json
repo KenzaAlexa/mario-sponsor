@@ -1,0 +1,13 @@
+{
+  "name": "it-fest-sponsor-overlay",
+  "version": "1.0.0",
+  "description": "Retro pixel-art game themed sponsor overlay & control panel for IT-Festival 2026",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve . -p 3000",
+    "dev": "npx -y serve . -p 3000"
+  },
+  "keywords": ["obs-overlay", "retro-gaming", "pixel-art", "mario", "pacman", "sponsor-display"],
+  "author": "IT-Festival 2026",
+  "license": "MIT"
+}

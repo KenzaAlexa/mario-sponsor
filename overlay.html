@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-FESTIVAL 2026 — Sponsor Overlay</title>
+  <meta name="description" content="Retro 8-bit Pixel Game Sponsor Overlay with Mario & Pacman for OBS Studio & Screen Streams">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/overlay.css">
+</head>
+<body class="overlay-body pixel-grid-bg">
+
+  <!-- Ambient Glow Blobs -->
+  <div class="glow-blob glow-pink" style="top: 10%; left: 15%; width: 380px; height: 380px;"></div>
+  <div class="glow-blob glow-cyan" style="bottom: 15%; right: 10%; width: 420px; height: 420px;"></div>
+  <div class="glow-blob glow-yellow" style="top: 40%; right: 25%; width: 300px; height: 300px;"></div>
+
+  <!-- Drifting Retro Clouds -->
+  <div class="pixel-cloud" style="top: 10%; animation-duration: 48s; animation-delay: 0s;">
+    <svg width="96" height="48" viewBox="0 0 96 48" fill="#F5F1E0"><rect x="24" y="8" width="48" height="32" rx="4"/><rect x="8" y="20" width="80" height="20" rx="4"/><circle cx="36" cy="16" r="16"/><circle cx="60" cy="18" r="14"/></svg>
+  </div>
+  <div class="pixel-cloud" style="top: 24%; animation-duration: 65s; animation-delay: -25s;">
+    <svg width="72" height="36" viewBox="0 0 96 48" fill="#F5F1E0"><rect x="24" y="8" width="48" height="32" rx="4"/><rect x="8" y="20" width="80" height="20" rx="4"/><circle cx="36" cy="16" r="16"/></svg>
+  </div>
+
+  <!-- Floating Retro Pixel Shapes (Matching IT-Fest 26) -->
+  <div class="floating-pixel-shape shape-pink-cube"></div>
+  <div class="floating-pixel-shape shape-cyan-diamond"></div>
+  <div class="floating-pixel-shape shape-yellow-cube"></div>
+
+  <!-- Sky Pacman Ghost Patrol (Easter Egg) -->
+  <div id="sky-ghost" class="sky-ghost-patrol"></div>
+
+  <!-- Arcade HUD (Top Bar) -->
+  <header class="arcade-hud">
+    <div class="hud-item">
+      <span class="hud-label">1P MARIO</span>
+      <span class="hud-value" id="hud-score">026000</span>
+    </div>
+
+    <div class="hud-item">
+      <span class="hud-label">COINS</span>
+      <span class="hud-value">
+        <span class="hud-coin-icon">
+          <svg viewBox="0 0 16 24" width="12" height="18" style="vertical-align: middle;"><rect x="2" y="0" width="12" height="24" fill="#050718"/><rect x="0" y="2" width="16" height="20" fill="#F5C800"/><rect x="3" y="4" width="10" height="16" fill="#FFE266"/></svg>
+        </span>
+        <span id="hud-coins">x12</span>
+      </span>
+    </div>
+
+    <div class="hud-item">
+      <span class="hud-label">STAGE</span>
+      <span class="hud-value" style="color: var(--accent-cyan);">IT-26</span>
+    </div>
+
+    <div class="hud-item">
+      <span class="hud-label">TIME</span>
+      <span class="hud-value" id="hud-time">365</span>
+    </div>
+
+    <div class="hud-item" style="align-items: flex-end;">
+      <span class="hud-label">STATUS</span>
+      <span class="live-badge" id="hud-active-sponsor">STANDBY</span>
+    </div>
+  </header>
+
+  <!-- Running Retro Marquee Strip (IT-Fest 26 Ticker) -->
+  <div id="overlay-marquee" class="retro-marquee-strip">
+    <div class="marquee-content-track">
+      <span>◆ THE BIGGEST IT-FESTIVAL 2026 ◆</span>
+      <span>★ VIBE CODING COMPETITION</span>
+      <span>★ CTF CYBER DEFENSE COMPETITION</span>
+      <span>★ PHOTOGRAPHY COMPETITION</span>
+      <span>◆ PELATIHAN WEB & KEAMANAN SIBER</span>
+      <span>◆ GUEST STAR: AVIP SYAIFULLOH (CEO WPU)</span>
+      <span>◆ KEYNOTE: RAHMI LIZA (SOFTWARE ENGINEER)</span>
+      <span>★ SUPPORTED BY OUR PRESTIGIOUS SPONSORS ★</span>
+      <!-- Duplicate for seamless loop -->
+      <span>◆ THE BIGGEST IT-FESTIVAL 2026 ◆</span>
+      <span>★ VIBE CODING COMPETITION</span>
+      <span>★ CTF CYBER DEFENSE COMPETITION</span>
+      <span>★ PHOTOGRAPHY COMPETITION</span>
+      <span>◆ PELATIHAN WEB & KEAMANAN SIBER</span>
+      <span>◆ GUEST STAR: AVIP SYAIFULLOH (CEO WPU)</span>
+      <span>◆ KEYNOTE: RAHMI LIZA (SOFTWARE ENGINEER)</span>
+      <span>★ SUPPORTED BY OUR PRESTIGIOUS SPONSORS ★</span>
+    </div>
+  </div>
+
+  <!-- Boo Ghost Easter Egg (Top Right Area) -->
+  <div id="boo-actor" title="Click for bonus points!"></div>
+
+  <!-- SPONSOR DISPLAY CARD (Center Floating Stage) -->
+  <main id="sponsor-stage-container">
+    <article id="sponsor-card" class="sponsor-card pixel-box pixel-box-cyan">
+      <!-- Pixel Corner Rivets -->
+      <div class="pixel-corner-tl"></div>
+      <div class="pixel-corner-tr"></div>
+      <div class="pixel-corner-bl"></div>
+      <div class="pixel-corner-br"></div>
+
+      <!-- Tier Badge Header -->
+      <div class="sponsor-tier-wrapper">
+        <span id="sponsor-tier-badge" class="badge-tier tier-gold">★ GOLD SPONSOR</span>
+      </div>
+
+      <!-- Sponsor Logo Image Display Box -->
+      <div class="sponsor-logo-box">
+        <img id="sponsor-logo-img" class="sponsor-logo-img" src="" alt="Sponsor Logo">
+      </div>
+
+      <!-- Sponsor Name & Tagline -->
+      <h1 id="sponsor-name" class="sponsor-name">SPONSOR NAME</h1>
+      <p id="sponsor-tagline" class="sponsor-tagline">OFFICIAL PARTNER OF IT-FESTIVAL 2026</p>
+    </article>
+  </main>
+
+  <!-- Pacman Actor (Sweeps from right to left to devour sponsors) -->
+  <div id="pacman-actor" style="display: none;"></div>
+
+  <!-- MARIO ARENA (Bottom Ground & Floating Blocks) -->
+  <section class="arena-container" aria-label="Mario Stage Arena">
+    <!-- Floating Question & Brick Blocks -->
+    <div id="blocks-row" class="blocks-row">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Green Warp Pipe with Piranha Plant inside -->
+    <div id="warp-pipe" class="warp-pipe"></div>
+    <div id="piranha-plant" class="piranha-plant-actor"></div>
+
+    <!-- Extra Bushes -->
+    <div id="bush-left" class="arena-bush-left"></div>
+    <div id="bush-right" class="arena-bush-right"></div>
+
+    <!-- Castle on Far Right -->
+    <div id="arena-castle" class="arena-castle"></div>
+
+    <!-- Patrolling Goomba NPC -->
+    <div id="goomba-actor"></div>
+
+    <!-- Ground Strip (Pixel Grass on top of Brown Soil) -->
+    <div class="ground-strip">
+      <div class="ground-grass-pixels"></div>
+    </div>
+
+    <!-- Mario Actor -->
+    <div id="mario-actor"></div>
+  </section>
+
+  <!-- Level Start Stage Banner (Wipes across on intro or start) -->
+  <div id="stage-start-banner">
+    <div>★ WORLD 1-1 ★</div>
+    <div style="font-size: 14px; color: var(--accent-cyan); margin-top: 8px;">STAGE: SPONSOR ARENA</div>
+  </div>
+
+  <!-- Opening Cinematic Arcade Video Game Intro Curtain -->
+  <div id="opening-curtain" class="hidden">
+    <div class="crt-beam-flash"></div>
+    <div class="arcade-intro-container">
+      
+      <!-- Retro BIOS Boot Sequence -->
+      <div class="arcade-bios-box" id="intro-bios-box">
+        <div class="bios-line"><span>IT-FEST BIOS v2.6 BOOT</span><span style="color: var(--accent-yellow);">[OK]</span></div>
+        <div class="bios-line"><span>VRAM 16-BIT DISPLAY MATRIX</span><span style="color: var(--accent-cyan);">[OK]</span></div>
+        <div class="bios-line"><span>PSG CHIPTUNE AUDIO 8-BIT</span><span style="color: var(--accent-pink);">[OK]</span></div>
+        <div class="bios-line"><span>CONTROLLER CHANNEL SYNC</span><span style="color: var(--accent-green);">[ACTIVE]</span></div>
+      </div>
+
+      <!-- Main Arcade Game Title -->
+      <h2 class="arcade-game-title">
+        ★ IT-FESTIVAL 2026 ★<br>
+        <span style="font-size: 18px; color: var(--text-cream); display: inline-block; margin-top: 6px;">
+          SPONSOR ARENA EDITION
+        </span>
+      </h2>
+
+      <div class="arcade-stage-badge">
+        PLAYER 1: MARIO • SPONSORS READY
+      </div>
+
+      <div class="arcade-coin-prompt">
+        ◆ INSERT COIN (01/01) • CLICK TO START ◆
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Retro CRT Scanline Overlay -->
+  <div id="crt-overlay" class="crt-overlay"></div>
+
+  <!-- Core Scripts -->
+  <script src="js/sound.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/channel.js"></script>
+  <script src="js/overlay.js"></script>
+</body>
+</html>

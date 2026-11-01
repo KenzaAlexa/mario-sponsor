@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-FESTIVAL 2026 — Sponsor Control Room</title>
+  <meta name="description" content="Dashboard Kontrol Sponsor Retro Pixel IT-Fest 2026 dengan Animasi Mario & Pacman">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/control.css">
+</head>
+<body class="control-body pixel-grid-bg">
+
+  <div class="control-container">
+
+    <!-- HEADER BRAND & QUICK LAUNCH -->
+    <header class="control-header">
+      <div class="header-brand">
+        <div class="header-logo-badge">✦</div>
+        <div class="header-title-box">
+          <h1>IT-FESTIVAL 2026 — CONTROL ROOM</h1>
+          <p>Sponsor Overlay Controller • Pixel Game Edition</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Live Connection Status -->
+        <div class="connection-pill">
+          <span id="connection-dot" class="connection-dot"></span>
+          <span id="connection-text">SEARCHING OVERLAY</span>
+        </div>
+
+        <!-- Open Overlay Link -->
+        <a href="overlay.html" target="_blank" class="press-btn btn-cyan" title="Buka layar overlay di tab baru untuk OBS / Projector">
+          🖥️ BUKA OVERLAY
+        </a>
+
+        <!-- Split View Mode -->
+        <a href="index.html?split=1" class="press-btn btn-yellow" title="Buka mode Split View (Overlay & Control berdampingan)">
+          ⚡ SPLIT TEST MODE
+        </a>
+      </div>
+    </header>
+
+    <!-- MASTER BROADCAST CONTROLS STRIP -->
+    <section class="master-actions-strip" aria-label="Broadcast Controls">
+      
+      <!-- Card 1: Trigger Actions -->
+      <div class="pixel-box action-card pixel-box-yellow">
+        <div class="card-title">🎮 AKSI UTAMA OVERLAY</div>
+        <div class="controls-row">
+          <button id="btn-play-intro" class="press-btn btn-dark" title="Jalankan animasi intro pembuka">
+            🎬 OPENING INTRO
+          </button>
+          <button id="btn-hide-active" class="press-btn btn-pink" title="Panggil Pacman dari kanan untuk memakan sponsor aktif">
+            👻 MAKAN (PACMAN)
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Auto Slideshow -->
+      <div class="pixel-box action-card pixel-box-cyan">
+        <div class="card-title">🔄 AUTO-LOOP SLIDESHOW</div>
+        <div class="controls-row">
+          <button id="btn-slideshow-toggle" class="press-btn btn-yellow">
+            🔄 AUTO-SLIDESHOW
+          </button>
+          <select id="slideshow-interval" class="form-select" style="width: auto; padding: 6px 10px; font-size: 12px;">
+            <option value="6">Tiap 6 Detik</option>
+            <option value="10" selected>Tiap 10 Detik</option>
+            <option value="15">Tiap 15 Detik</option>
+            <option value="25">Tiap 25 Detik</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Card 3: Display & Audio Settings -->
+      <div class="pixel-box action-card pixel-box-pink">
+        <div class="card-title">⚙️ PENGATURAN TAMPILAN & SUARA</div>
+        <div class="controls-row" style="font-size: 11px; gap: 12px; flex-wrap: wrap;">
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="bg-transparent-toggle">
+            <span class="font-mono">OBS Alpha</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="crt-toggle" checked>
+            <span class="font-mono">CRT Scan</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="audio-mute-toggle">
+            <span class="font-mono">Mute SFX</span>
+          </label>
+
+          <input type="range" id="audio-volume-slider" min="0" max="1" step="0.05" value="0.5" style="width: 60px;" title="Volume SFX">
+        </div>
+      </div>
+
+      <!-- Card 4: Rich Widgets Visibility Toggles -->
+      <div class="pixel-box action-card" style="border-color: var(--accent-yellow);">
+        <div class="card-title" style="color: var(--accent-yellow);">✨ TOGGLE ELEMEN LAYAR</div>
+        <div class="controls-row" style="font-size: 11px; gap: 12px; flex-wrap: wrap;">
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="toggle-widget-marquee" checked>
+            <span class="font-mono">Running Marquee</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="toggle-widget-npcs" checked>
+            <span class="font-mono">Goomba & Pipe</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 5: Status Monitor -->
+      <div class="pixel-box action-card" style="border-color: var(--accent-green);">
+        <div class="card-title" style="color: var(--accent-green);">📺 STATUS OVERLAY AKTIF</div>
+        <div id="active-sponsor-text" class="font-pixel" style="font-size: 11px; color: var(--accent-yellow); margin-top: 4px;">
+          STANDBY (KOSONG)
+        </div>
+      </div>
+
+    </section>
+
+    <!-- DASHBOARD MAIN: FORM & SPONSORS LIST -->
+    <main class="dashboard-grid">
+
+      <!-- LEFT COLUMN: TAMBAH / EDIT SPONSOR FORM -->
+      <section class="pixel-box form-panel pixel-box-cyan">
+        <div class="pixel-corner-tl"></div>
+        <div class="pixel-corner-tr"></div>
+        <div class="pixel-corner-bl"></div>
+        <div class="pixel-corner-br"></div>
+
+        <h2 class="card-title" style="margin-bottom: 20px; font-size: 13px;">
+          ➕ KELOLA DATA SPONSOR
+        </h2>
+
+        <form id="sponsor-form">
+          <div class="form-group">
+            <label class="form-label" for="sponsor-name-input">Nama Sponsor *</label>
+            <input type="text" id="sponsor-name-input" class="form-input" placeholder="Contoh: Google Cloud, Dicoding, WPU" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sponsor-tier-select">Tingkatan (Tier) Sponsor</label>
+            <select id="sponsor-tier-select" class="form-select">
+              <option value="Diamond">💎 Diamond Sponsor</option>
+              <option value="Platinum">★ Platinum Sponsor</option>
+              <option value="Gold" selected>★ Gold Sponsor</option>
+              <option value="Silver">★ Silver Sponsor</option>
+              <option value="Bronze">★ Bronze Sponsor</option>
+              <option value="Media">📢 Media Partner</option>
+              <option value="Community">👥 Community Partner</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sponsor-tagline-input">Tagline / Subtitle</label>
+            <input type="text" id="sponsor-tagline-input" class="form-input" placeholder="Contoh: Official Cloud Infrastructure Partner">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Upload File Logo Sponsor</label>
+            <label class="upload-dropzone">
+              <input type="file" id="sponsor-logo-file" accept="image/*" style="display: none;">
+              <span style="font-size: 24px;">📁</span>
+              <span class="font-pixel" style="font-size: 9px; color: var(--accent-cyan);">KLIK ATAU DRAG FILE LOGO</span>
+              <span class="font-mono" style="font-size: 10px; color: var(--text-cream-dim);">(PNG transparan, JPG, WebP, SVG)</span>
+            </label>
+
+            <!-- Preview Box -->
+            <div class="logo-preview-box">
+              <img id="form-logo-preview" src="" alt="Preview Logo" style="display: none;">
+            </div>
+          </div>
+
+          <div class="controls-row" style="margin-top: 24px;">
+            <button type="submit" id="btn-submit-form" class="press-btn btn-yellow" style="flex-grow: 1;">
+              ➕ TAMBAH KE DAFTAR
+            </button>
+            <button type="button" id="btn-cancel-edit" class="press-btn btn-dark" style="display: none;">
+              BATAL
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT COLUMN: DAFTAR SPONSOR -->
+      <section class="pixel-box sponsors-list-panel pixel-box-yellow">
+        <div class="pixel-corner-tl"></div>
+        <div class="pixel-corner-tr"></div>
+        <div class="pixel-corner-bl"></div>
+        <div class="pixel-corner-br"></div>
+
+        <div class="list-header">
+          <h2 class="card-title" style="font-size: 13px;">
+            📋 DAFTAR SPONSOR TERSEDIA
+          </h2>
+          <button id="btn-reset-presets" class="press-btn btn-dark" style="font-size: 9px; padding: 6px 12px;">
+            ↺ KEMBALIKAN PRESET
+          </button>
+        </div>
+
+        <!-- Cards Grid Container -->
+        <div id="sponsors-grid" class="sponsors-grid">
+          <!-- Populated by js/control.js -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ACTIVITY LOG TERMINAL -->
+    <section class="activity-log-panel" aria-label="Console Log">
+      <div style="font-family: var(--font-pixel); font-size: 9px; color: var(--accent-cyan); margin-bottom: 8px;">
+        📟 ACTIVITY CONSOLE & BROADCAST EVENTS:
+      </div>
+      <div id="activity-log-console">
+        <!-- Log entries -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/sound.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/channel.js"></script>
+  <script src="js/control.js"></script>
+</body>
+</html>

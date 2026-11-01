@@ -1,0 +1,787 @@
+/* ==========================================================================
+   IT-FESTIVAL 2026 — OVERLAY STYLES
+   Smooth motion graphics, retro arcade physics & pixel arena
+   ========================================================================== */
+
+body.overlay-body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--bg-navy-950);
+  position: relative;
+  user-select: none;
+}
+
+body.overlay-body.transparent-mode {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.overlay-body.transparent-mode .glow-blob,
+body.overlay-body.transparent-mode .sky-gradient {
+  display: none !important;
+}
+
+/* Background Atmosphere */
+.sky-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, #0d1445 0%, #050718 70%, #02030a 100%);
+  z-index: 1;
+}
+
+/* Floating Retro Clouds in Sky */
+.pixel-cloud {
+  position: absolute;
+  z-index: 2;
+  opacity: 0.35;
+  filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.4));
+  animation: cloud-drift linear infinite;
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(110vw); }
+  to { transform: translateX(-20vw); }
+}
+
+/* Retro HUD Header (Top Bar) */
+.arcade-hud {
+  position: absolute;
+  top: 18px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-cream);
+  text-shadow: 2px 2px 0px #050718;
+}
+
+.hud-label {
+  font-size: 9px;
+  color: var(--accent-pink);
+  letter-spacing: 0.1em;
+}
+
+.hud-value {
+  font-size: 13px;
+  color: var(--accent-yellow);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-coin-icon {
+  width: 12px;
+  height: 16px;
+  display: inline-block;
+}
+
+.live-badge {
+  background: var(--accent-pink);
+  color: #fff;
+  padding: 4px 10px;
+  border: 2px solid var(--border-ink);
+  box-shadow: 2px 2px 0px var(--border-ink);
+  font-size: 9px;
+  animation: blink-live 1.5s infinite;
+}
+
+@keyframes blink-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ==========================================================================
+   MARIO ARENA & PLATFORMS (Bottom Ground)
+   ========================================================================== */
+.arena-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Floating Interactive Question & Brick Blocks */
+.blocks-row {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 25;
+}
+
+.arena-block {
+  width: 36px;
+  height: 36px;
+  position: relative;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.arena-block.bumped {
+  animation: block-bump 0.22s ease-out;
+}
+
+@keyframes block-bump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+  100% { transform: translateY(0); }
+}
+
+/* Rising Coin from Question Block */
+.popped-coin {
+  position: absolute;
+  width: 20px;
+  height: 28px;
+  left: 8px;
+  bottom: 36px;
+  pointer-events: none;
+  animation: pop-coin 0.6s ease-out forwards;
+}
+
+@keyframes pop-coin {
+  0% { transform: translateY(0) scale(0.8); opacity: 1; }
+  50% { transform: translateY(-50px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-30px) scale(0.9); opacity: 0; }
+}
+
+/* Float Text "+100 PTS" */
+.float-score {
+  position: absolute;
+  left: -10px;
+  top: -40px;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--accent-yellow);
+  text-shadow: 2px 2px 0px #050718;
+  animation: score-float 0.8s ease-out forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes score-float {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-35px); opacity: 0; }
+}
+
+/* Warp Pipe */
+.warp-pipe {
+  position: absolute;
+  bottom: 60px;
+  left: 60px;
+  width: 56px;
+  height: 74px;
+  z-index: 22;
+}
+
+/* Ground Layers (Pixel Grass + Brown Soil) */
+.ground-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 30;
+  border-top: 4px solid var(--border-ink);
+  background: 
+    /* Grass top border */
+    linear-gradient(#10B981 0px, #10B981 12px, #050718 12px, #050718 16px, #c26122 16px, #c26122 100%);
+  box-shadow: 0 -4px 0px rgba(0,0,0,0.3);
+}
+
+.ground-grass-pixels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background-image: radial-gradient(#80E800 20%, transparent 20%);
+  background-size: 8px 8px;
+}
+
+/* Bushes & Hills */
+.arena-bush {
+  position: absolute;
+  bottom: 60px;
+  right: 120px;
+  z-index: 21;
+}
+
+/* ==========================================================================
+   CHARACTERS: MARIO & PACMAN
+   ========================================================================== */
+
+/* Mario Character Container (Hardware-Accelerated transform translate) */
+#mario-actor {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  z-index: 35;
+  transform-origin: center bottom;
+  filter: drop-shadow(2px 4px 0px rgba(5,7,24,0.7));
+  will-change: transform;
+}
+
+#mario-actor.facing-left {
+  transform: scaleX(-1);
+}
+
+/* Dust Puffs for running, landing, and skidding */
+.mario-dust {
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  background: rgba(245, 241, 224, 0.7);
+  border: 1px solid var(--border-ink);
+  border-radius: 4px;
+  z-index: 34;
+  pointer-events: none;
+  animation: dust-fade 0.35s ease-out forwards;
+}
+
+@keyframes dust-fade {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+  100% { transform: scale(0.2) translate(var(--dust-x, -12px), -10px); opacity: 0; }
+}
+
+/* Pipe Shake upon Mario Emergence */
+.warp-pipe.pipe-rumble {
+  animation: pipe-shake 0.3s ease-in-out infinite;
+}
+
+@keyframes pipe-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Mario Throw Fireball Projectile */
+.fireball-projectile {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 25%, var(--accent-yellow) 55%, var(--accent-pink) 90%);
+  border: 2px solid #050718;
+  box-shadow: 0 0 16px var(--accent-yellow), 0 0 28px var(--accent-pink);
+  z-index: 60;
+  pointer-events: none;
+  animation: fireball-spin 0.15s linear infinite;
+}
+
+@keyframes fireball-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Fireball Trail Particle */
+.fireball-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-yellow);
+  border: 1px solid #050718;
+  pointer-events: none;
+  z-index: 59;
+  animation: spark-fade 0.35s ease-out forwards;
+}
+
+@keyframes spark-fade {
+  0% { transform: scale(1) translate(0, 0); opacity: 1; }
+  100% { transform: scale(0.2) translate(-10px, 10px); opacity: 0; }
+}
+
+/* Pacman Actor */
+#pacman-actor {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  right: -150px;
+  top: 40%;
+  z-index: 80;
+  pointer-events: none;
+  transition: transform 0.05s linear;
+}
+
+#pacman-actor.eating {
+  animation: pacman-mouth 0.15s steps(4) infinite alternate;
+}
+
+@keyframes pacman-mouth {
+  0% { clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%); }
+  100% { clip-path: polygon(100% 0%, 100% 100%, 50% 50%, 0% 0%); }
+}
+
+/* Devouring Crunch Particles */
+.pixel-crumb {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-yellow);
+  border: 1px solid var(--border-ink);
+  pointer-events: none;
+  z-index: 85;
+  animation: crumb-scatter 0.45s ease-out forwards;
+}
+
+@keyframes crumb-scatter {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+
+/* Boo Easter Egg */
+#boo-actor {
+  position: absolute;
+  top: 110px;
+  right: 90px;
+  width: 44px;
+  height: 44px;
+  z-index: 15;
+  animation: boo-float 5s infinite ease-in-out;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+@keyframes boo-float {
+  0%, 100% { transform: translate(0, 0) scaleX(1); }
+  50% { transform: translate(-30px, -15px) scaleX(1); }
+  51% { transform: translate(-30px, -15px) scaleX(-1); }
+  99% { transform: translate(0, 0) scaleX(-1); }
+}
+
+/* ==========================================================================
+   SPONSOR CARD STAGE (Main Centerpiece)
+   ========================================================================== */
+#sponsor-stage-container {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 680px;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.sponsor-card {
+  width: 100%;
+  background: var(--bg-navy-850);
+  border: 4px solid var(--border-ink);
+  box-shadow: var(--shadow-hard-xl), 0 0 30px rgba(0, 229, 255, 0.2);
+  padding: 30px 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.4) translateY(40px);
+  transition: opacity 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sponsor-card.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  animation: sponsor-idle-bob 4s ease-in-out infinite 0.4s;
+}
+
+/* Completely hidden with NO transition glitch after Pacman eats */
+.sponsor-card.eaten-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.4) translateY(40px) !important;
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%) !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+@keyframes sponsor-idle-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Sponsor Header Pill / Tier */
+.sponsor-tier-wrapper {
+  margin-bottom: 18px;
+}
+
+/* Sponsor Logo Box */
+.sponsor-logo-box {
+  width: 100%;
+  height: 180px;
+  max-height: 220px;
+  background: rgba(5, 7, 24, 0.6);
+  border: 3px solid var(--border-ink);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.sponsor-logo-img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+}
+
+.sponsor-logo-img:hover {
+  transform: scale(1.05);
+}
+
+/* Sponsor Title & Tagline */
+.sponsor-name {
+  font-family: var(--font-pixel);
+  font-size: 22px;
+  color: var(--text-cream);
+  text-shadow: 3px 3px 0px #050718;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.sponsor-tagline {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-yellow);
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  max-width: 90%;
+}
+
+/* ==========================================================================
+   AUTHENTIC VIDEO GAME ARCADE OPENING INTRO
+   ========================================================================== */
+#opening-curtain {
+  position: fixed;
+  inset: 0;
+  background: #02030a;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  cursor: pointer;
+}
+
+#opening-curtain.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* CRT Beam Flash effect on start */
+.crt-beam-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  animation: beam-on 0.6s ease-out forwards;
+}
+
+@keyframes beam-on {
+  0% { opacity: 1; transform: scaleY(0.01); }
+  50% { opacity: 0.8; transform: scaleY(0.03); }
+  70% { opacity: 0.6; transform: scaleY(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.arcade-intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  max-width: 800px;
+  padding: 30px;
+}
+
+/* Retro BIOS Boot Text */
+.arcade-bios-box {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent-green);
+  text-align: left;
+  line-height: 1.8;
+  background: rgba(5, 7, 24, 0.9);
+  border: 2px solid var(--accent-green);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  padding: 18px 24px;
+  width: 100%;
+  max-width: 540px;
+}
+
+.bios-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Main Golden Arcade Title */
+.arcade-game-title {
+  font-family: var(--font-pixel);
+  font-size: 34px;
+  line-height: 1.4;
+  color: var(--accent-yellow);
+  text-shadow: 
+    4px 4px 0px #050718,
+    -2px -2px 0px #FF3D8A,
+    0 0 25px var(--accent-yellow-glow);
+  letter-spacing: 0.08em;
+  animation: arcade-title-float 2s ease-in-out infinite alternate;
+}
+
+@keyframes arcade-title-float {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-6px) scale(1.02); }
+}
+
+.arcade-stage-badge {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  background: var(--accent-pink);
+  color: #fff;
+  border: 3px solid var(--border-ink);
+  box-shadow: 4px 4px 0px var(--border-ink);
+  padding: 8px 18px;
+  letter-spacing: 0.1em;
+}
+
+.arcade-coin-prompt {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--accent-cyan);
+  letter-spacing: 0.15em;
+  animation: blink-live 0.8s infinite;
+  margin-top: 10px;
+}
+
+/* Level Start Stage Wipe Banner */
+#stage-start-banner {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1200;
+  font-family: var(--font-pixel);
+  font-size: 26px;
+  color: var(--accent-yellow);
+  text-shadow: 4px 4px 0px #050718, 0 0 20px var(--accent-yellow-glow);
+  background: var(--bg-navy-900);
+  border: 4px solid var(--border-ink);
+  box-shadow: var(--shadow-hard-xl);
+  padding: 18px 40px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+#stage-start-banner.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==========================================================================
+   RETRO RUNNING MARQUEE STRIP (IT-Fest 26 News Ticker)
+   ========================================================================== */
+.retro-marquee-strip {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: var(--accent-yellow);
+  border-top: 3px solid var(--border-ink);
+  border-bottom: 3px solid var(--border-ink);
+  box-shadow: 0 4px 0px rgba(5,7,24,0.4);
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.marquee-content-track {
+  display: flex;
+  white-space: nowrap;
+  gap: 36px;
+  animation: marquee-track 32s linear infinite;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--border-ink);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+@keyframes marquee-track {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   FLOATING PIXEL RETRO SHAPES IN SKY (Matching IT-Fest 26)
+   ========================================================================== */
+.floating-pixel-shape {
+  position: absolute;
+  pointer-events: none;
+  border: 3px solid var(--border-ink);
+  box-shadow: 3px 3px 0px rgba(5,7,24,0.6);
+  z-index: 5;
+  animation: float-subtle 4s ease-in-out infinite alternate;
+}
+
+.shape-pink-cube {
+  top: 140px;
+  left: 280px;
+  width: 28px;
+  height: 28px;
+  background: var(--accent-pink);
+  transform: rotate(-14deg);
+}
+
+.shape-cyan-diamond {
+  top: 200px;
+  right: 290px;
+  width: 32px;
+  height: 32px;
+  background: var(--accent-cyan);
+  transform: rotate(18deg);
+  animation-delay: 1.2s;
+}
+
+.shape-yellow-cube {
+  bottom: 220px;
+  left: 320px;
+  width: 24px;
+  height: 24px;
+  background: var(--accent-yellow);
+  transform: rotate(26deg);
+  animation-delay: 2.2s;
+}
+
+/* ==========================================================================
+   ARENA ENRICHMENTS: PIRANHA PLANT, GOOMBA, CASTLE, BUSHES
+   ========================================================================== */
+
+/* Piranha Plant peeking out of Green Warp Pipe */
+.piranha-plant-actor {
+  position: absolute;
+  bottom: 122px;
+  left: 72px;
+  width: 32px;
+  height: 40px;
+  z-index: 21;
+  pointer-events: none;
+  animation: piranha-peek 6s infinite ease-in-out;
+}
+
+@keyframes piranha-peek {
+  0%, 100% { transform: translateY(42px); } /* fully hidden inside pipe */
+  15%, 45% { transform: translateY(0px); }  /* emerging and biting */
+  60% { transform: translateY(42px); }      /* ducks back down */
+}
+
+/* Patrolling Goomba NPC */
+#goomba-actor {
+  position: absolute;
+  bottom: 60px;
+  left: 480px;
+  width: 32px;
+  height: 32px;
+  z-index: 33;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Castle on Far Right */
+.arena-castle {
+  position: absolute;
+  bottom: 60px;
+  right: 40px;
+  width: 88px;
+  height: 88px;
+  z-index: 22;
+}
+
+/* Extra Mario Bush */
+.arena-bush-left {
+  position: absolute;
+  bottom: 60px;
+  left: 200px;
+  width: 64px;
+  height: 32px;
+  z-index: 21;
+}
+
+.arena-bush-right {
+  position: absolute;
+  bottom: 60px;
+  right: 140px;
+  width: 72px;
+  height: 36px;
+  z-index: 21;
+}
+
+/* Additional Platform Tier on Right Side */
+.arena-side-platform {
+  position: absolute;
+  bottom: 140px;
+  right: 180px;
+  display: flex;
+  gap: 6px;
+  z-index: 24;
+}
+
+/* Pacman Ghost Chaser in Upper Sky */
+.sky-ghost-patrol {
+  position: absolute;
+  top: 92px;
+  width: 30px;
+  height: 30px;
+  z-index: 6;
+  opacity: 0.85;
+  animation: sky-patrol-sweep 38s linear infinite;
+}
+
+@keyframes sky-patrol-sweep {
+  0% { transform: translateX(105vw); }
+  100% { transform: translateX(-15vw); }
+}
+
+

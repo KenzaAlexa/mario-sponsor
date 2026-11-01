@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-FESTIVAL 2026 — Sponsor Overlay System Hub</title>
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body {
+      background-color: var(--bg-navy-950);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Split View Container */
+    #split-view-container {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      grid-template-columns: 1fr 1fr;
+      border: none;
+    }
+
+    @media (max-width: 1200px) {
+      #split-view-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+    }
+
+    .split-frame-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: 3px solid var(--border-ink);
+    }
+
+    .split-frame-header {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      background: var(--bg-navy-900);
+      padding: 4px 10px;
+      border: 2px solid var(--border-ink);
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--accent-yellow);
+      z-index: 100;
+      box-shadow: 2px 2px 0px var(--border-ink);
+    }
+
+    .split-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Landing Portal */
+    #portal-landing {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .portal-banner {
+      padding: 30px 40px;
+      background: var(--bg-navy-850);
+      border: 4px solid var(--border-ink);
+      box-shadow: var(--shadow-hard-xl);
+      position: relative;
+      width: 100%;
+    }
+
+    .portal-title {
+      font-family: var(--font-pixel);
+      font-size: 28px;
+      color: var(--accent-yellow);
+      text-shadow: 3px 3px 0px #050718;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .portal-subtitle {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-cream-dim);
+      line-height: 1.6;
+    }
+
+    .portal-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .portal-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 36px;
+      margin-bottom: 4px;
+    }
+
+    .portal-card h3 {
+      font-family: var(--font-pixel);
+      font-size: 14px;
+      color: var(--text-cream);
+    }
+
+    .portal-card p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-cream-dim);
+      line-height: 1.5;
+    }
+
+    .instructions-box {
+      background: var(--bg-navy-900);
+      border: 3px solid var(--border-ink);
+      box-shadow: var(--shadow-hard);
+      padding: 20px 28px;
+      text-align: left;
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-cream-dim);
+    }
+
+    .instructions-box h4 {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--accent-pink);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body class="pixel-grid-bg">
+
+  <!-- Ambient Glow Blobs -->
+  <div class="glow-blob glow-pink" style="top: 15%; left: 10%; width: 350px; height: 350px;"></div>
+  <div class="glow-blob glow-cyan" style="bottom: 10%; right: 15%; width: 400px; height: 400px;"></div>
+
+  <!-- SPLIT SCREEN MODE (Active when ?split=1) -->
+  <div id="split-view-container">
+    <div class="split-frame-wrapper">
+      <div class="split-frame-header">🖥️ LAYAR OVERLAY (OBS DISPLAY)</div>
+      <iframe src="overlay.html" class="split-frame"></iframe>
+    </div>
+    <div class="split-frame-wrapper">
+      <div class="split-frame-header">🎛️ HALAMAN CONTROL (OPERATOR)</div>
+      <iframe src="control.html" class="split-frame"></iframe>
+    </div>
+  </div>
+
+  <!-- LANDING HUB PORTAL -->
+  <div id="portal-landing">
+    
+    <div class="portal-banner pixel-box pixel-box-yellow">
+      <div class="pixel-corner-tl"></div>
+      <div class="pixel-corner-tr"></div>
+      <div class="pixel-corner-bl"></div>
+      <div class="pixel-corner-br"></div>
+
+      <div style="font-family: var(--font-pixel); font-size: 10px; color: var(--accent-pink); margin-bottom: 8px; letter-spacing: 0.15em;">
+        ◆ SISTEM SPONSOR OVERLAY PIXEL GAME ◆
+      </div>
+      <h1 class="portal-title">IT-FESTIVAL 2026</h1>
+      <p class="portal-subtitle">
+        Motion Graphic Overlay Sponsor interaktif dengan animasi karakter retro <strong>Mario</strong> (melempar & memunculkan sponsor) dan <strong>Pacman</strong> (memakan logo dari kanan ke kiri), disinkronisasi realtime melalui <code>BroadcastChannel</code>.
+      </p>
+    </div>
+
+    <div class="portal-options-grid">
+
+      <!-- Option 1: Split View Studio -->
+      <div class="pixel-box portal-card pixel-box-cyan">
+        <div class="card-icon">⚡</div>
+        <h3>SPLIT SCREEN STUDIO</h3>
+        <p>Buka layar Overlay dan Panel Control berdampingan dalam 1 tab browser untuk pengujian & demo langsung.</p>
+        <a href="index.html?split=1" class="press-btn btn-cyan" style="margin-top: auto; width: 100%;">
+          BUKA SPLIT VIEW
+        </a>
+      </div>
+
+      <!-- Option 2: Overlay Screen -->
+      <div class="pixel-box portal-card pixel-box-pink">
+        <div class="card-icon">🖥️</div>
+        <h3>LAYAR OVERLAY (OBS)</h3>
+        <p>Tampilan penuh untuk OBS Studio Browser Source atau Projector dengan arena Mario, cloud drifting, dan Pacman devour.</p>
+        <a href="overlay.html" target="_blank" class="press-btn btn-pink" style="margin-top: auto; width: 100%;">
+          BUKA OVERLAY
+        </a>
+      </div>
+
+      <!-- Option 3: Control Panel -->
+      <div class="pixel-box portal-card pixel-box-yellow">
+        <div class="card-icon">🎛️</div>
+        <h3>HALAMAN CONTROL</h3>
+        <p>Dashboard operator untuk menambah data sponsor, upload logo, trigger lemparan Mario, dan jalankan auto slideshow.</p>
+        <a href="control.html" target="_blank" class="press-btn btn-yellow" style="margin-top: auto; width: 100%;">
+          BUKA CONTROL
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Quick OBS Setup Guide -->
+    <div class="instructions-box">
+      <h4>📌 PANDUAN PENGGUNAAN OBS STUDIO:</h4>
+      <ol style="padding-left: 20px;">
+        <li>Buka <strong>OBS Studio</strong> → Tambahkan Source baru bertipe <strong>Browser Source</strong>.</li>
+        <li>Masukkan URL lokal overlay: <code style="color: var(--accent-cyan);">file:///c:/Users/user/Downloads/Sponsor/overlay.html</code> atau URL local server.</li>
+        <li>Set resolusi ke <strong>Width: 1920</strong> dan <strong>Height: 1080</strong>.</li>
+        <li>Di Panel Kontrol (<code style="color: var(--accent-yellow);">control.html</code>), centang opsi <strong>"OBS Transparent"</strong> jika ingin latar belakang transparan menyatu dengan stream.</li>
+        <li>Klik <strong>"TAMPILKAN"</strong> pada sponsor mana saja untuk melihat Mario melempar logo, atau klik <strong>"MAKAN"</strong> untuk memanggil Pacman!</li>
+      </ol>
+    </div>
+
+  </div>
+
+  <script>
+    // Auto toggle split view if ?split=1 in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('split') === '1' || urlParams.get('split') === 'true') {
+      document.getElementById('split-view-container').style.display = 'grid';
+      document.getElementById('portal-landing').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+  </script>
+</body>
+</html>
